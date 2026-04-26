@@ -1,23 +1,6 @@
--- Easter Event Joiner - с повторением
-local VirtualInput = game:GetService("VirtualInputManager")
-
-local buttonX = 48  -- ← ИЗМЕНИ НА СВОИ КООРДИНАТЫ
-local buttonY = 434  -- ← ИЗМЕНИ НА СВОИ КООРДИНАТЫ
-
-local function clickAt(x, y)
-    VirtualInput:SendMouseButtonEvent(x, y, 0, true, game, 0)
-    wait(0.05)
-    VirtualInput:SendMouseButtonEvent(x, y, 0, false, game, 0)
-end
-
--- Ждём загрузки
-wait(5)
-
--- Кликаем 3 раза с интервалом
-for i = 1, 3 do
-    clickAt(buttonX, buttonY)
-    print("Clicked " .. i .. " time at " .. buttonX .. ", " .. buttonY)
-    wait(1)
-end
-
-print("Done! If not joined, adjust coordinates.")
+game:GetService("StarterGui"):SetCore("SendNotification", {
+    Title = "Test";
+    Text = "Script is working!";
+    Duration = 5;
+})
+print("Test message - check console")
