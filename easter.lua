@@ -21,7 +21,7 @@ local function joinEvent()
             for _, button in pairs(screenGui:GetDescendants()) do
                 if button:IsA("TextButton") and button.Visible then
                     local text = button.Text or ""
-                    if text:find("Join") and text:find("Event") then
+                    if text:find("Join") and text:find("Event!") then
                         log("✅ Found button: " .. text)
                         button:Click()
                         log("✅ Clicked Join Event!")
