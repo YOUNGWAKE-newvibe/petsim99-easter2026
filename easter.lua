@@ -1,6 +1,3 @@
-game:GetService("StarterGui"):SetCore("SendNotification", {
-    Title = "Test";
-    Text = "Script is working!";
-    Duration = 5;
-})
-print("Test message - check console")
+print("=== TEST MESSAGE ===")
+print("If you see this, script is running")
+print("Current time: " .. os.date("%H:%M:%S"))
