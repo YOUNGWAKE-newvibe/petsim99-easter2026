@@ -1,24 +1,30 @@
--- Easter Event Auto-Join for Pet Simulator 99
--- Скрипт автоматически входит в ивент при запуске
-
+-- Easter Event Auto-Join with Logging
 local Players = game:GetService("Players")
 local localPlayer = Players.LocalPlayer
 local VirtualInput = game:GetService("VirtualInputManager")
 
--- Функция поиска и нажатия кнопки "Join Event!"
+-- Функция для логов в консоль Potassium
+local function log(message)
+    local timestamp = os.date("%H:%M:%S")
+    print("[" .. timestamp .. "] " .. message)
+end
+
+-- Функция поиска и нажатия кнопки
 local function joinEvent()
-    -- Ищем кнопку через CoreGui
+    log("🔍 Searching for Join Event button...")
+    
     local gui = game:GetService("CoreGui")
+    local found = false
     
     for _, screenGui in pairs(gui:GetChildren()) do
         if screenGui:IsA("ScreenGui") then
             for _, button in pairs(screenGui:GetDescendants()) do
                 if button:IsA("TextButton") and button.Visible then
                     local text = button.Text or ""
-                    -- Ищем кнопку с текстом Join Event
                     if text:find("Join") and text:find("Event") then
+                        log("✅ Found button: " .. text)
                         button:Click()
-                        print("✅ Joined Easter Event!")
+                        log("✅ Clicked Join Event!")
                         return true
                     end
                 end
@@ -26,31 +32,41 @@ local function joinEvent()
         end
     end
     
-    -- Если не нашли через GUI, пробуем клик по координатам
-    print("🔍 Searching by coordinates...")
+    log("❌ Button not found, trying coordinates...")
     VirtualInput:SendMouseButtonEvent(960, 400, 0, true, game, 0)
     wait(0.1)
     VirtualInput:SendMouseButtonEvent(960, 400, 0, false, game, 0)
+    log("✅ Clicked at coordinates (960, 400)")
     return false
 end
 
--- Ждём загрузки игры
+-- Основная логика
+log("🚀 Easter Event Script Started!")
+log("⏳ Waiting for game to load...")
+
+-- Ждём загрузки
 repeat
     wait(1)
-    print("⏳ Waiting for game to load...")
+    log("📡 Waiting for PlayerGui...")
 until localPlayer and localPlayer:FindFirstChild("PlayerGui")
 
--- Даём время на появление интерфейса
-wait(3)
+log("✅ Game loaded!")
+
+-- Ждём появление интерфейса
+log("⏳ Waiting 5 seconds for UI to appear...")
+wait(5)
 
 -- Входим в ивент
-print("🎯 Attempting to join Easter Event...")
+log("🎯 Attempting to join Easter Event...")
 joinEvent()
 
--- Опционально: продолжаем проверять каждые 10 секунд
+-- Проверка каждые 10 секунд
+local checkCount = 0
 while true do
     wait(10)
-    -- Проверяем, не вылетел ли из ивента
+    checkCount = checkCount + 1
+    log("🔄 Check #" .. checkCount .. " - Verifying event status...")
+    
     local stillInEvent = false
     local gui = game:GetService("CoreGui")
     
@@ -65,8 +81,10 @@ while true do
         end
     end
     
-    if not stillInEvent then
-        print("🔄 Left event, rejoining...")
+    if stillInEvent then
+        log("✅ Still in Easter Event")
+    else
+        log("⚠️ Left Easter Event! Rejoining...")
         joinEvent()
     end
 end
