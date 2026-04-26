@@ -1,8 +1,8 @@
 -- Easter Event Joiner - с повторением
 local VirtualInput = game:GetService("VirtualInputManager")
 
-local buttonX = 960   -- ← ИЗМЕНИ НА СВОИ КООРДИНАТЫ
-local buttonY = 400   -- ← ИЗМЕНИ НА СВОИ КООРДИНАТЫ
+local buttonX = 48  -- ← ИЗМЕНИ НА СВОИ КООРДИНАТЫ
+local buttonY = 434  -- ← ИЗМЕНИ НА СВОИ КООРДИНАТЫ
 
 local function clickAt(x, y)
     VirtualInput:SendMouseButtonEvent(x, y, 0, true, game, 0)
